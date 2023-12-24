@@ -4,12 +4,9 @@ from pom.login_page_elements import LoginPage
 
 
 @pytest.mark.smoke
-def test_user_login_with_valid_data(set_up):
+def test_user_go_to_base_page(set_up):
     page = set_up
-    login_page = LoginPage(page)
-    expect(login_page.login_logo).to_be_visible()
-    expect(login_page.is_error_appears()).not_to_be_visible()
-
+    expect(page.get_by_role("link", name="Rozetka Logo")).to_be_visible()
 
 @pytest.mark.regression
 @pytest.mark.parametrize("user_login,user_password", [("1111", "6765675"), ("hjjh", "hjhghghf"), ("&^%$", "&*&$#")])
