@@ -14,7 +14,7 @@ def set_up(playwright: Playwright):
     context = browser.new_context()
 
     page = context.new_page()
-    page.goto(os.getenv("BASE_URL"))
+    page.goto("https://rozetka.com.ua")
     page.set_default_timeout(5000)
 
     yield page
