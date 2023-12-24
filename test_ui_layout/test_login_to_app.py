@@ -8,6 +8,15 @@ def test_user_go_to_base_page(set_up):
     page = set_up
     expect(page.get_by_role("link", name="Rozetka Logo")).to_be_visible()
 
+
+@pytest.mark.smoke
+def test_user_go_to_base_page2(set_up):
+    page = set_up
+    page.locator("xpath=//input[@class='search-form__input ng-untouched ng-pristine ng-valid']").fill("samsung s23")
+    page.locator("xpath=//button[@class='button button_color_green button_size_medium search-form__submit']").click()
+    expect(page.get_by_role("link", name="Rozetka Logo")).to_be_visible()
+
+
 @pytest.mark.regression
 @pytest.mark.parametrize("user_login,user_password", [("1111", "6765675")])#, ("hjjh", "hjhghghf"), ("&^%$", "&*&$#")])
 def test_user_login_with_invalid_data(set_up, user_login, user_password) -> None:
@@ -19,3 +28,4 @@ def test_user_login_with_invalid_data(set_up, user_login, user_password) -> None
 
     expect(page.get_by_text("Введено невірну адресу ел. пошти або номер телефону"),
            "The error message should be visible").to_be_visible()
+
