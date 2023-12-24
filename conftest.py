@@ -7,9 +7,10 @@ import os
 
 load_dotenv()
 
+
 @pytest.fixture(scope="function")
 def set_up(playwright: Playwright):
-    browser = playwright.chromium.launch(headless=False, slow_mo=500)
+    browser = playwright.chromium.launch(headless=True, slow_mo=500)
     context = browser.new_context()
 
     page = context.new_page()
