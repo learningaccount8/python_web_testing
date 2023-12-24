@@ -10,7 +10,7 @@ load_dotenv()
 
 @pytest.fixture(scope="function")
 def set_up(playwright: Playwright):
-    browser = playwright.chromium.launch(headless=True, args=["--start-maximized"])
+    browser = playwright.chromium.launch(headless=False, args=["--start-maximized"])
     # create a new incognito browser context.
     context = browser.new_context(no_viewport=True)
     # create a new page in a pristine context.
