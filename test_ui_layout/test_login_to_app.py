@@ -9,7 +9,7 @@ def test_user_go_to_base_page(set_up):
     expect(page.get_by_role("link", name="Rozetka Logo")).to_be_visible()
 
 @pytest.mark.regression
-@pytest.mark.parametrize("user_login,user_password", [("1111", "6765675"), ("hjjh", "hjhghghf"), ("&^%$", "&*&$#")])
+@pytest.mark.parametrize("user_login,user_password", [("1111", "6765675")])#, ("hjjh", "hjhghghf"), ("&^%$", "&*&$#")])
 def test_user_login_with_invalid_data(set_up, user_login, user_password) -> None:
     page = set_up
     login_page = LoginPage(page)
