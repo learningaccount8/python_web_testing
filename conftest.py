@@ -15,7 +15,7 @@ def set_up(playwright: Playwright):
     context = browser.new_context(no_viewport=True)
     # create a new page in a pristine context.
     page = context.new_page()
-    page.goto("https://rozetka.com.ua")
+    page.goto("https://www.google.com.ua/")
 
     yield page
     page.close()

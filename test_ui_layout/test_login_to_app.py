@@ -14,7 +14,16 @@ def test_user_go_to_base_page2(set_up):
     page = set_up
     page.locator("xpath=//input[@class='search-form__input ng-untouched ng-pristine ng-valid']").fill("samsung s23")
     page.locator("xpath=//button[@class='button button_color_green button_size_medium search-form__submit']").click()
-    expect(page.get_by_role("link", name="Rozetka Logo")).to_be_visible()
+    page.wait_for_selector(page.get_by_role("link", name="Rozetka Logo")).to_be_visible()
+
+
+@pytest.mark.smoke
+def test_user_go_to_base_page3(set_up):
+    page = set_up
+    page.locator("xpath=//textarea[@class='gLFyf']").fill("w3schools")
+    page.keyboard.press('Enter')
+    page.locator("xpath=//h3[contains(text(),'W3Schools Online Web Tutorials')]").click()
+    expect(page.locator("xpath=//input[@id='search2']")).to_be_visible(timeout=5000)
 
 
 @pytest.mark.regression
