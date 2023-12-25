@@ -7,6 +7,12 @@ def test_user_go_to_w3school(set_up):
     page = set_up
     page.locator("xpath=//textarea[@class='gLFyf']").fill("w3schools")
     page.keyboard.press('Enter')
-    page.locator("xpath=//h3[contains(text(),'W3Schools Online Web Tutorials')]").click()
-    expect(page.locator("xpath=//input[@id='search2']")).to_be_visible(timeout=5000)
+    # page.get_by_text("w3schools", exact=True).click()
+    # page.locator("xpath=//h3[contains(text(),'W3Schools Online Web Tutorials')]").click()
+
+    page.get_by_role("link", name="W3Schools Online Web").click()
+    expect(page.locator("xpath=//input[@id='search2']")).to_be_visible()
+    page.get_by_role("link", name="JAVA", exact=True).click()
+    page.get_by_role("link", name="Java Booleans").click()
+    expect(page.get_by_role("heading", name="Boolean Values")).to_be_visible()
 
