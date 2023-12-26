@@ -5,7 +5,7 @@ name: Web-testing python application
 on: [push]
 
 permissions:
-  contents: read
+  contents: write
   pages: write 
 
 jobs:
@@ -58,6 +58,6 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       if: always()
       with:
-        github_token: ${{ secrets.ACCESS_TOKEN }}
+        github_token: $
         publish_branch: gh-pages
         publish_dir: allure-history
