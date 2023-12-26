@@ -5,7 +5,8 @@ name: Python application
 on: [push]
 
 permissions:
-  contents: write
+  contents: read
+  pages: write 
 
 jobs:
   build:
