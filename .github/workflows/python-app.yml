@@ -1,29 +1,61 @@
-name: Playwright Tests
+name: allure-report
+
 on:
+  release:
+    types:
+      - created
   push:
-    branches: [ dev, master ]
-  pull_request:
-    branches: [ dev, master ]
+    branches-ignore:
+      - '!master'
+
 jobs:
-  test:
-    timeout-minutes: 60
+  allure:
+    name: Generate Allure Report
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Ensure browsers are installed
-      run: python -m playwright install --with-deps
-    - name: Run your tests
-      run: pytest --tracing=retain-on-failure
-    - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: playwright-traces
-        path: test-results/
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+         python -m pip install --upgrade pip
+         python -m pip install pytest-xvfb
+         pip install flake8 pytest-playwright
+         python -m pip install playwright
+         python -m pip install python-dotenv
+      - name: Ensure Playwright browsers are installed
+        run: python -m playwright install chromium
+      - name: Lint with flake8
+
+      - name: Test with pytest
+        run: |
+          pytest
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        #id: allure-report
+        with:
+          allure_results: allure-results
+          #gh_pages: gh-pages
+          #allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
