@@ -28,7 +28,6 @@ jobs:
         python -m pip install python-dotenv
     - name: Ensure Playwright browsers are installed
       run: python -m playwright install chromium
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -43,14 +42,14 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-        ref: dev
-        path: dev
+        ref: gh-pages
+        path: gh-pages
 
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.7
       if: always()
       with:
-        gh_pages: dev
+        gh_pages: gh-pages
         allure_history: allure-history
         allure_results: allure-results
 
@@ -59,5 +58,5 @@ jobs:
       if: always()
       with:
         github_token: $
-        publish_branch: dev
+        publish_branch: gh-pages
         publish_dir: allure-history
