@@ -7,19 +7,13 @@ pytest:
   script:
     - pip install -r requirements.txt
     - python -m playwright install chromium
-    - pytest --junitxml=junit.xml
+    - python -m pytest --clean-alluredir
+  after_script:
+    -  allure serve allure-results
   artifacts:
-    reports:
-      junit: junit.xml
-
-pages:
-  stage: test
-  image: python:3.8
-  script:
-    - apt-get update && apt-get install -y allure
-    - allure generate --clean -o allure-report ./allure-results
-  artifacts:
+    when: always
     paths:
-      - allure-report/
+      - allure-results\*
+
   only:
     - master
