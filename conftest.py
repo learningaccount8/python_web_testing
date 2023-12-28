@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Playwright
 
 import time
@@ -9,6 +10,7 @@ load_dotenv()
 
 
 @pytest.fixture(scope="function")
+@allure.title("Prepare for the test")
 def set_up(playwright: Playwright):
     browser = playwright.chromium.launch(headless=False, args=["--start-maximized"])
     # create a new incognito browser context.
@@ -19,3 +21,4 @@ def set_up(playwright: Playwright):
 
     yield page
     page.close()
+    return page
