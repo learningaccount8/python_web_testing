@@ -4,9 +4,7 @@ from playwright.sync_api import expect
 from pom.google_page import GooglePage
 from pom.w3_school_page import W3SchoolPage
 from utils.common_action import CommonActions
-
-
-target_resource = "w3schools"
+from utils.constants import Constants
 
 
 @pytest.mark.smoke
@@ -14,19 +12,19 @@ target_resource = "w3schools"
 def test_open_w3school(set_up):
     page = set_up
     google_page = GooglePage(page)
-    google_page.search_resource(target_resource)
+    google_page.search_resource(Constants.target_resource)
     CommonActions.confirm_searching(page)
     google_page.open_w3_school_resource()
 
     expect(W3SchoolPage(page).get_w3_school_logo(), "The W3School logo should be visible").to_be_visible()
 
 
-@pytest.mark.regression
+@pytest.mark.integration
 @allure.title("Test open W3School resource/ Java section")
 def test_open_java_boolean_section(set_up):
     page = set_up
     google_page = GooglePage(page)
-    google_page.search_resource(target_resource)
+    google_page.search_resource(Constants.target_resource)
     CommonActions.confirm_searching(page)
     google_page.open_w3_school_resource()
     w3_school_page = W3SchoolPage(page)

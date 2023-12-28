@@ -8,6 +8,7 @@ class W3SchoolPage:
         self.page = page
         self.login_logo = page.get_by_label("Home link")
         self.main_input = page.get_by_placeholder("Search our tutorials, e.g.")
+        self.not_sure_where_to_begin_link = page.get_by_role("link", name="Not Sure Where To Begin?")
         self.java_tutorial = page.get_by_role("link", name="JAVA", exact=True)
         self.java_boolean_section = page.get_by_role("link", name="Java Booleans")
         self.java_boolean_title = page.locator("h2").filter(has_text="Java Booleans")
@@ -17,6 +18,13 @@ class W3SchoolPage:
 
     def get_main_input(self):
         return self.main_input
+
+    def search_tutorials(self, topic_to_learn):
+        self.main_input.fill(topic_to_learn)
+        self.main_input.click()
+
+    def not_sure_where_to_begin(self):
+        return self.not_sure_where_to_begin_link
 
     @allure.step("Open Java tutorial page")
     def open_java_tutorial(self):
